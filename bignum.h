@@ -1,11 +1,19 @@
 #ifndef _BIGNUM_
 #define _BIGNUM_
 
-class bignum {
+#include <string>
+#include <iostream>
+
+
+class bignum{
 private:
     unsigned short *digits;
+
     // ...
 public:
+    bignum();
+    bignum(std::istream *);
+    ~bignum();
     // ...
     friend bignum operator+(const bignum&, const bignum&);
     friend bignum operator-(const bignum&, const bignum&);
