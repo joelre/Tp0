@@ -3,18 +3,20 @@
 
 #include <string>
 #include <iostream>
-
+#include <lentrada.h>
 
 class bignum{
 private:
     unsigned short *digits;
+    size_t tam;
+    bool signo;
 
+    bignum();
     // ...
 public:
-    bignum();
-    bignum(std::istream *);
+    bignum(lentrada &,int);
     ~bignum();
-    // ...
+    bool obtenersigno();
     friend bignum operator+(const bignum&, const bignum&);
     friend bignum operator-(const bignum&, const bignum&);
     friend bignum operator*(const bignum&, const bignum&);

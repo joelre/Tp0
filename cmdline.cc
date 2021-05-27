@@ -106,7 +106,7 @@ cmdline::do_long_opt(const char *opt, const char *arg)
 			op->flags |= OPT_SEEN;
 
 			if (op->has_arg) {
-				// Como se trada de una opci�n
+				// Como se trata de una opci�n
 				// con argumento, verificamos que
 				// el mismo haya sido provisto.
 				//

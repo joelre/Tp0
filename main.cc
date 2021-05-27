@@ -13,6 +13,11 @@
 
 #include <cmdline.h>
 #include <bignum.h>
+#include <lentrada.h>
+
+
+#include <string>
+
 
 
 using namespace std;
@@ -108,13 +113,14 @@ static void opt_presicion(string const &arg){
 
 		istringstream iss(arg);
 
-		// Intentamos extraer el factor de la l�nea de comandos.
+		// Intentamos extraer la presicion de la l�nea de comandos.
 		// Para detectar argumentos que �nicamente consistan de 
 		// n�meros enteros, vamos a verificar que EOF llegue justo
-		// despu�s de la lectura exitosa del escalar.
+		// despu�s de la lectura exitosa del escalar y que el valor
+		// introducido sea mayor a cero.
 		//
-		if (!(iss >> presicion) || !iss.eof()){
-			cerr<<"La presicion tipeada no es un numero entero: "<<arg<< "."<< endl;
+		if (!(iss >> presicion) || !iss.eof() || presicion<=0){
+			cerr<<"La presicion introducida es invalida: "<<arg<< "."<< endl;
 			exit(1);
 		}
 
@@ -136,39 +142,76 @@ int main(int argc, char * const argv[]){
 	cmdline cmdl(options);
 	cmdl.parse(argc, argv);
 
+	lentrada lectura(iss);
+	bignum n1(lectura,presicion);
+	bignum n2(lectura,presicion);
+	bignum n3(lectura,presicion);
+	bignum n4(lectura,presicion);
+	bignum n5(lectura,presicion);
+	bignum n6(lectura,presicion);
+
+
+
+	if(n1.obtenersigno()){
+		cout<<"n1 es positivo"<<endl;
+	}else{
+		cout<<"n1 es negativo"<<endl;
+	}
+
+	if(n2.obtenersigno()){
+		cout<<"n2 es positivo"<<endl;
+	}else{
+		cout<<"n2 es negativo"<<endl;
+	}
+	//bignum n2(lectura,presicion);
+
+
+
+/*
+	for(int i=0;i<presicion;i++){
+		unsigned short num = lectura.obtenerdigito();
+		cout<<num<<endl;
+	}
+	
+
+	bool flag=true;
+	while(flag){
+		lentrada lectura(iss);
+	}
+
+
+	while(getline(*iss,linea)){
+		short num=stoi();
+
+		cout<<"entre"<<endl;
+		cout<<linea<<endl;
+		linea.clear();
+	}
+*/
+
+
+/*
+	string l1;
+	unsigned short num;
+    *iss>>l1;
+	size_t pos;
+
+	num=stol(l1,&pos);
+
+	cout<<"entrada: "<<l1<<endl;
+    cout<<num<<endl;
+	cout<<"posicion: "<<pos<<endl;
+	cout<<l1[pos]<<endl;
+*/
+
+
 /*
 	char num[10];
 
 	*iss>>num;
 	*oss<<num<<endl;
 */
-/*
-
-	cout<<argc<<endl;
-	cout<<presicion<<endl;
-
-	bignum numero(iss);
-
-
-	unsigned short *digito = new unsigned short[5];
-
-	digito[0]= 3123; 
-	digito[1]= 2132;
-
 	
-
-
-	cout<<*digito<<endl;
-
-	//delete[] digito;
-
-
-	cmdline cmdl(options);
-	cmdl.parse(argc, argv);
-	multiply(iss, oss);
-	
-	*/
-
 /*
 
 	string b="205072";
@@ -187,19 +230,19 @@ int main(int argc, char * const argv[]){
 
   3
 
- 	40 60									86 			64
-	 50			20,503,000				59 			89    		51,888,696
+ 	4 0 6 0									86 			64
+	 5 0			20,503,000				59 			89    		51,888,696
  	------									5074	   5696
  	00 00
   2 03 0-
 	00 -
-*/
+
 	int a=95;
 	int b= a/10;
 	int c= a%10;
 
 	cout<<b<<endl;
 	cout<<c<<endl;
-
+*/
 	
 }
