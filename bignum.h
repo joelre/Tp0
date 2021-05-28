@@ -12,6 +12,7 @@ private:
     bool signo;
 
     bignum();
+    bignum(size_t);
     // ...
 public:
     bignum(lentrada &,int);

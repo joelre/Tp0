@@ -145,12 +145,8 @@ int main(int argc, char * const argv[]){
 	lentrada lectura(iss);
 	bignum n1(lectura,presicion);
 	bignum n2(lectura,presicion);
-	bignum n3(lectura,presicion);
-	bignum n4(lectura,presicion);
-	bignum n5(lectura,presicion);
-	bignum n6(lectura,presicion);
 
-
+	bignum n= n1+n2;
 
 	if(n1.obtenersigno()){
 		cout<<"n1 es positivo"<<endl;

@@ -11,6 +11,7 @@ private:
     std::string linea;
     size_t pos;
     bool signo;
+    bool signoleido;
     bool multiplicacion;
 
     lentrada();

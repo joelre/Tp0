@@ -11,13 +11,10 @@ lentrada::lentrada(){
 lentrada::lentrada(istream *entrante){
     entrada = entrante;
 
-    getline(*entrada,linea);
-
-    if(!linea[0])
-        cout<<"termino"<<endl;
-  
+    getline(*entrada,linea); 
     pos=0;
     multiplicacion=false;
+    signoleido=false;
     signo=true;
 }
 
@@ -29,7 +26,6 @@ lentrada::~lentrada(){
 void lentrada::obtenerdigito(unsigned short &num,bool &seguir){
     seguir=true;
     while(!isdigit(linea[pos])){
-        
         if(!linea[pos]){
             linea.clear();
             getline(*entrada,linea);
@@ -39,21 +35,40 @@ void lentrada::obtenerdigito(unsigned short &num,bool &seguir){
             return;
         }
 
-        if(linea[pos]=='-'){
-            signo=false;
-            pos++;
-            break;
-        }else if(linea[pos]=='*'){
+        if(linea[pos]=='*'){
             multiplicacion=true;
             seguir=false;
             signo=true;
+            signoleido=false;
             pos++;
             return;
         }
-        
-        seguir=false;
-        pos++;
+
+        if(signoleido){
+            signo=true;
+            signoleido=false;
+            seguir=false;
+            return;
+        }
+
+        while(!signoleido){
+            if(linea[pos]=='-'){
+                signo=false;
+                pos++;
+            }else if(linea[pos]=='+'){
+                signo=true;
+                pos++;
+            }
+            signoleido=true;
+        }
+
     }
+
+    if(pos==0 && !signoleido){
+        signo=true;
+        signoleido=true;
+    }
+
     num=(linea[pos++]-'0');
 }
 
