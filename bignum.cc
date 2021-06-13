@@ -49,27 +49,31 @@ bignum::~bignum(){
         delete[] digits;
 }
 
+bool bignum::obtenersigno(){
+    return signo;
+}
+
 //Reservo tres posiciones más de memoria dinamica respecto al
 //tamaño más grande de arreglos entre ambas entradas bignum.
 //
 
+
 bignum operator+(const bignum& n1, const bignum& n2){
-    bignum *n;
     int mayor,menor,i;
 
     if(n1.tam > n2.tam){
         mayor=n1.tam-1;
         menor=n2.tam-1;
-        n = new bignum(3+mayor);
     }else{
         mayor=n2.tam-1;
         menor=n1.tam-1;
-        n= new bignum(3+mayor);
     }
 
-    for(i=n->tam-1;i>=0 && mayor>=0;i--){
+    bignum n(3+mayor);
+
+    for(i=n.tam-1;i>=0 && mayor>=0;i--){
         unsigned short aux;
-        
+
         if(menor>=0){
             aux= n1.digits[mayor--] + n2.digits[menor--];
         }else{
@@ -77,18 +81,79 @@ bignum operator+(const bignum& n1, const bignum& n2){
         }
         
         if(aux>9){
-            n->digits[i]= aux%10;
-            n->digits[i-1]= aux/10;
+            n.digits[i]= aux%10;
+            n.digits[i-1]= aux/10;
         }else{
-            n->digits[i]+=aux;
+            n.digits[i]+=aux;
         }
-        cout<<"suma: "<<n->digits[i]<<endl;
     }
 
-    n->signo=true;
-    return *n;
+    n.signo=true;
+
+    cout<<"suma: ";
+    for(size_t x=0;x<n.tam;x++){
+        cout<<n.digits[x];
+    }
+    cout<<endl;
+    return n;
 }
 
-bool bignum::obtenersigno(){
-    return signo;
+bignum operator-(const bignum& n1, const bignum& n2){
+    const bignum *mayor,*menor;    
+    int tam_ma,tam_me,acumulador=0;
+
+    if(n1.tam > n2.tam){
+        mayor=&n1;
+        menor=&n2;
+    }else if(n1.tam < n2.tam){
+        mayor=&n2;
+        menor=&n1;
+    }else{
+        if(n1.digits[0] > n2.digits[0]){
+            mayor=&n1;
+            menor=&n2;
+        }else{
+            mayor=&n2;
+            menor=&n1;
+        }
+    }
+
+    tam_ma = mayor->tam-1;
+    tam_me = menor->tam-1;
+
+    bignum n(tam_ma+1);
+
+    for(int i=tam_ma;i>=0 && tam_ma>=0;i--){
+        unsigned short aux;
+
+        if(tam_me>=0){
+            if((mayor->digits[tam_ma]-acumulador)< menor->digits[tam_me]){
+                if(mayor->digits[tam_ma]==0){
+                    aux = 10;
+                    n.digits[i]= aux- menor->digits[tam_me];
+                }else{
+                    aux= (mayor->digits[tam_ma]-acumulador) + 10;
+                    n.digits[i]= aux- menor->digits[tam_me];
+                }
+                tam_ma--;
+                tam_me--;
+                acumulador=1;
+            }else{
+                n.digits[i] = (mayor->digits[tam_ma--]-acumulador) - menor->digits[tam_me--];
+                acumulador=0;
+            }
+        }else{
+            n.digits[i]= mayor->digits[tam_ma--]-acumulador;
+            acumulador=0;
+        }
+    }
+
+    n.signo= mayor->signo;
+
+    cout<<"resta: ";
+    for(size_t x=0;x<n.tam;x++){
+        cout<<n.digits[x];
+    }
+    cout<<endl;
+    return n;
 }

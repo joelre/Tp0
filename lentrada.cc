@@ -59,6 +59,12 @@ void lentrada::obtenerdigito(unsigned short &num,bool &seguir){
                 signo=true;
                 pos++;
             }
+
+            if(linea[pos]==' '){
+                pos++;
+                continue;
+            }
+
             signoleido=true;
         }
 

@@ -146,7 +146,7 @@ int main(int argc, char * const argv[]){
 	bignum n1(lectura,presicion);
 	bignum n2(lectura,presicion);
 
-	bignum n= n1+n2;
+	bignum n= n1-n2;
 
 	if(n1.obtenersigno()){
 		cout<<"n1 es positivo"<<endl;
@@ -159,6 +159,7 @@ int main(int argc, char * const argv[]){
 	}else{
 		cout<<"n2 es negativo"<<endl;
 	}
+
 	//bignum n2(lectura,presicion);
 
 
